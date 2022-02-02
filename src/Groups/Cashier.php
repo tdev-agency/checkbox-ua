@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 use RuntimeException;
 use TDevAgency\CheckboxUa\Client;
+use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
@@ -63,20 +64,20 @@ class Cashier
      * @throws GuzzleException
      * @throws JsonException
      */
-    public function signIn(string $login, string $password): SignInResponseEntity
+    public function signIn(SignInRequestEntity $entity): SignInResponseEntity
     {
         $data = $this->client->request('cashier/signin', 'POST', [
             'json' => [
-                'login' => $login,
-                'password' => $password,
+                'login' => $entity->getLogin(),
+                'password' => $entity->getPassword(),
             ]
         ]);
 
-        $entity = new SignInResponseEntity($data);
+        $responseEntity = new SignInResponseEntity($data);
 
-        $this->client->setAccessToken($entity);
+        $this->client->setAccessToken($responseEntity);
 
-        return $entity;
+        return $responseEntity;
     }
 
     /**
@@ -94,21 +95,21 @@ class Cashier
      * @throws GuzzleException
      * @throws JsonException
      */
-    public function signInPinCode(string $licenseKey, string $pinCode): SignInResponseEntity
+    public function signInPinCode(SignInRequestEntity $entity): SignInResponseEntity
     {
         $data = $this->client->request('cashier/signinPinCode', 'POST', [
             'headers' => [
-                'X-License-Key' => $licenseKey
+                'X-License-Key' => $entity->getLicenseKey()
             ],
             'json' => [
-                'pin_code' => $pinCode,
+                'pin_code' => $entity->getPinCode(),
             ]
         ]);
 
-        $entity = new SignInResponseEntity($data);
+        $responseEntity = new SignInResponseEntity($data);
 
-        $this->client->setAccessToken($entity);
+        $this->client->setAccessToken($responseEntity);
 
-        return $entity;
+        return $responseEntity;
     }
 }

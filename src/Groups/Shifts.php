@@ -3,12 +3,13 @@
 namespace TDevAgency\CheckboxUa\Groups;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use JsonException;
-use TDevAgency\CheckboxUa\Entities\Requests\ReportRequestEntity;
-use TDevAgency\CheckboxUa\Entities\Responses\ReportResponseEntity;
+use TDevAgency\CheckboxUa\Entities\Requests\ShiftCloseRequestEntity;
+use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
-use TDevAgency\CheckboxUa\Entities\Traits\Group;
+use TDevAgency\CheckboxUa\Traits\Group;
 
 class Shifts
 {
@@ -53,14 +54,14 @@ class Shifts
      * @throws JsonException
      */
     public function createShift(
-        string $license_key,
+        SignInRequestEntity $signInRequestEntity,
         ?string $id = null,
         ?string $fiscal_code = null,
         ?string $fiscal_date = null
     ): ShiftResponseEntity {
         $result = $this->client->request('shifts', 'POST', [
             'headers' => [
-                'X-License-Key' => $license_key,
+                'X-License-Key' => $signInRequestEntity->getLicenseKey(),
             ],
             'json' => array_filter(compact('id', 'fiscal_code', 'fiscal_date'))
         ]);
@@ -85,23 +86,23 @@ class Shifts
     }
 
     /**
-     * @param bool $skip_client_name_check
-     * @param ReportRequestEntity|null $report
-     * @param string|null $fiscal_code
-     * @param string|null $fiscal_date
+     * @param ShiftCloseRequestEntity|null $entity
      * @return ShiftResponseEntity
      * @throws GuzzleException
      * @throws JsonException
      */
-    public function closeShift(
-        bool $skip_client_name_check = false,
-        ?ReportRequestEntity $report = null,
-        ?string $fiscal_code = null,
-        ?string $fiscal_date = null
-    ): ShiftResponseEntity {
+    public function closeShift(?ShiftCloseRequestEntity $entity = null): ShiftResponseEntity
+    {
+        if ($entity instanceof Arrayable) {
+            $json = array_filter($entity->toArray());
+        } else {
+            $json = [];
+        }
+
         $result = $this->client->request('shifts/close', 'POST', [
-            'json' => array_filter(compact('skip_client_name_check', 'report', 'fiscal_code', 'fiscal_date'))
+            'json' => $json
         ]);
+
         return new ShiftResponseEntity($result);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Entities\Traits;
+namespace TDevAgency\CheckboxUa\Traits;
 
 use DateTime;
 use DateTimeInterface;
@@ -8,8 +8,8 @@ use Exception;
 use Illuminate\Contracts\Support\Arrayable;
 use ReflectionClass;
 use ReflectionProperty;
-use TDevAgency\CheckboxUa\Entities\Interfaces\ShiftStatusInterface;
 use TDevAgency\CheckboxUa\Entities\Responses\OrganizationResponseEntity;
+use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 
 trait ResponseEntity
 {

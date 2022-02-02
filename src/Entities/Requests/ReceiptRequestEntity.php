@@ -2,13 +2,12 @@
 
 namespace TDevAgency\CheckboxUa\Entities\Requests;
 
-use TDevAgency\CheckboxUa\Entities\DeliveryEntity;
-use TDevAgency\CheckboxUa\Entities\DiscountEntity;
-use TDevAgency\CheckboxUa\Entities\ItemEntity;
-use TDevAgency\CheckboxUa\Entities\Traits\RequestEntity;
-use TDevAgency\CheckboxUa\Entities\EntityInterface;
 
-class ReceiptRequestEntity implements EntityInterface
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
+use TDevAgency\CheckboxUa\Traits\RequestEntity;
+
+class ReceiptRequestEntity implements Arrayable
 {
     use RequestEntity;
 
@@ -18,15 +17,13 @@ class ReceiptRequestEntity implements EntityInterface
 
     private string $departament;
 
-    /** @var ItemEntity[] */
-    private array $goods;
+    private Collection $goods;
 
-    private ?DeliveryEntity $delivery = null;
+    private ?string $delivery = null;
 
-    /** @var DiscountEntity[] */
-    private array $discounts = [];
+    private Collection $discounts;
 
-    private array $payments = [];
+    private Collection $payments;
 
     private bool $rounding = false;
 

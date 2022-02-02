@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\Client;
+use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
@@ -19,7 +20,8 @@ class ShiftsTest extends TestCase
     {
         $client = new Client();
         $this->assertInstanceOf(Client::class, $client);
-        $client->cashier->signIn($_ENV['LOGIN'], $_ENV['PASSWORD']);
+        $entity = SignInRequestEntity::create(['login' => $_ENV['LOGIN'], 'password' => $_ENV['password']]);
+        $client->cashier->signIn($entity);
         return $client->shifts;
     }
 
@@ -28,11 +30,11 @@ class ShiftsTest extends TestCase
      * @param Shifts $shifts
      * @return void
      */
-//    public function testCloseShift(Shifts $shifts): void
-//    {
-//        $result = $shifts->closeShift();
-//        $this->assertInstanceOf(ShiftResponseEntity::class, $result);
-//    }
+    public function testCloseShift(Shifts $shifts): void
+    {
+        $result = $shifts->closeShift();
+        $this->assertInstanceOf(ShiftResponseEntity::class, $result);
+    }
 
     /**
      * @depends testAuthorizeClient
@@ -41,11 +43,11 @@ class ShiftsTest extends TestCase
      * @throws GuzzleException
      * @throws JsonException
      */
-//    public function testCreateShift(Shifts $shifts): void
-//    {
-//        $result = $shifts->createShift($_ENV['LICENSE_KEY']);
-//        $this->assertInstanceOf(ShiftResponseEntity::class, $result);
-//    }
+    public function testCreateShift(Shifts $shifts): void
+    {
+        $result = $shifts->createShift($_ENV['LICENSE_KEY']);
+        $this->assertInstanceOf(ShiftResponseEntity::class, $result);
+    }
 
 
     /**

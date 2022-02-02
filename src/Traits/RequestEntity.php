@@ -1,12 +1,12 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Entities\Traits;
+namespace TDevAgency\CheckboxUa\Traits;
 
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use ReflectionClass;
 use ReflectionProperty;
-use TDevAgency\CheckboxUa\Entities\Interfaces\RequestEntityInterface;
+use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 
 trait RequestEntity
 {
@@ -25,6 +25,8 @@ trait RequestEntity
                 $data[$prop] = $this->$prop->toArray();
             } elseif ($this->$prop instanceof DateTimeInterface) {
                 $data[$prop] = $this->$prop->format('c');
+            } elseif ($this->$prop instanceof ShiftStatusInterface) {
+                $data[$prop] = $this->$prop->__toString();
             } else {
                 $data[$prop] = $this->$prop;
             }

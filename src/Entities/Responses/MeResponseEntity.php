@@ -4,7 +4,7 @@ namespace TDevAgency\CheckboxUa\Entities\Responses;
 
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
-use TDevAgency\CheckboxUa\Entities\Traits\ResponseEntity;
+use TDevAgency\CheckboxUa\Traits\ResponseEntity;
 
 class MeResponseEntity implements Arrayable
 {

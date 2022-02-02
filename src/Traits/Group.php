@@ -1,6 +1,6 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Entities\Traits;
+namespace TDevAgency\CheckboxUa\Traits;
 
 use TDevAgency\CheckboxUa\Client;
 

@@ -3,7 +3,7 @@
 namespace TDevAgency\CheckboxUa\Entities\Responses;
 
 use Illuminate\Contracts\Support\Arrayable;
-use TDevAgency\CheckboxUa\Entities\Traits\ResponseEntity;
+use TDevAgency\CheckboxUa\Traits\ResponseEntity;
 
 class PaymentResponseEntity implements Arrayable
 {

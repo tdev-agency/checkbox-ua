@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\Client;
+use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
@@ -30,7 +31,8 @@ class CashierTest extends TestCase
      */
     public function testSignIn(Client $client): SignInResponseEntity
     {
-        $data = $client->cashier->signIn($_ENV['LOGIN'], $_ENV['PASSWORD']);
+        $entity = SignInRequestEntity::create(['login' => $_ENV['LOGIN'], 'password' => $_ENV['password']]);
+        $data = $client->cashier->signIn($entity);
 
         $this->assertInstanceOf(SignInResponseEntity::class, $data);
 
@@ -46,7 +48,9 @@ class CashierTest extends TestCase
      */
     public function testSignInPinCode(Client $client): SignInResponseEntity
     {
-        $data = $client->cashier->signInPinCode($_ENV['LICENSE_KEY'], $_ENV['PIN_CODE']);
+        $entity = SignInRequestEntity::create(['licence_key' => $_ENV['LICENSE_KEY'], 'pin_code' => $_ENV['PIN_CODE']]);
+
+        $data = $client->cashier->signInPinCode($entity);
 
         $this->assertInstanceOf(SignInResponseEntity::class, $data);
 

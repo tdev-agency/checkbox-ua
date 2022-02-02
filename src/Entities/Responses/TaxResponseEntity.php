@@ -4,9 +4,7 @@ namespace TDevAgency\CheckboxUa\Entities\Responses;
 
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
-use TDevAgency\CheckboxUa\Entities\Entity;
-use TDevAgency\CheckboxUa\Entities\EntityInterface;
-use TDevAgency\CheckboxUa\Entities\Traits\ResponseEntity;
+use TDevAgency\CheckboxUa\Traits\ResponseEntity;
 
 class TaxResponseEntity implements Arrayable
 {

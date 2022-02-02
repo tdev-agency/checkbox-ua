@@ -2,7 +2,7 @@
 
 namespace TDevAgency\CheckboxUa\Entities\Responses;
 
-use TDevAgency\CheckboxUa\Entities\Traits\ResponseEntity;
+use TDevAgency\CheckboxUa\Traits\ResponseEntity;
 
 class SignatureResponseEntity
 {

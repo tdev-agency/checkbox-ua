@@ -1,6 +1,6 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Entities\Interfaces;
+namespace TDevAgency\CheckboxUa\Interfaces;
 
 interface ShiftStatusInterface
 {

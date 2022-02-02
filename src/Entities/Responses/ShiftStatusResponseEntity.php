@@ -2,10 +2,7 @@
 
 namespace TDevAgency\CheckboxUa\Entities\Responses;
 
-use TDevAgency\CheckboxUa\Entities\Entity;
-use TDevAgency\CheckboxUa\Entities\EntityInterface;
-use TDevAgency\CheckboxUa\Entities\Interfaces\ShiftStatusInterface;
-use TDevAgency\CheckboxUa\Entities\Traits\ResponseEntity;
+use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 
 class ShiftStatusResponseEntity implements ShiftStatusInterface
 {

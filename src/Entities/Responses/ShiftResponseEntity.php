@@ -6,8 +6,8 @@ use DateTime;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
-use TDevAgency\CheckboxUa\Entities\Traits\HasTaxes;
-use TDevAgency\CheckboxUa\Entities\Traits\ResponseEntity;
+use TDevAgency\CheckboxUa\Traits\HasTaxes;
+use TDevAgency\CheckboxUa\Traits\ResponseEntity;
 
 class ShiftResponseEntity implements Arrayable
 {
