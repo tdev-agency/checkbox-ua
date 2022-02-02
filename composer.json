@@ -1,0 +1,29 @@
+{
+  "name": "tdev-agency/checkbox-ua",
+  "description": "Checkbox.ua SDK",
+  "version": "1.0.0",
+  "type": "library",
+  "require": {
+    "php": "^7.4|^8",
+    "guzzlehttp/guzzle": "^7",
+    "ext-json": "*",
+    "illuminate/collections": "^7|^8"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "TDevAgency\\CheckboxUa\\": "src/",
+      "TDevAgency\\CheckboxUa\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "TDev Agency",
+      "email": "contact@tdev.agency"
+    }
+  ],
+  "minimum-stability": "stable"
+}

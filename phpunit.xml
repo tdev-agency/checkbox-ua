@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="CheckboxUa">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="LOGIN" value="test_b5atywtu1"/>
+        <env name="PASSWORD" value="test_b5atywtu1"/>
+        <env name="LICENSE_KEY" value="test187c7418518595b799287422"/>
+        <env name="PIN_CODE" value="9889925423"/>
+    </php>
+</phpunit>
