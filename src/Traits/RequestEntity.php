@@ -11,6 +11,9 @@ use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 trait RequestEntity
 {
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         $reflect = new ReflectionClass(self::class);

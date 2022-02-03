@@ -3,25 +3,23 @@
 namespace TDevAgency\CheckboxUa\Groups;
 
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 use RuntimeException;
-use TDevAgency\CheckboxUa\Client;
+use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
+use TDevAgency\CheckboxUa\HttpClient;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignInResponseEntity;
+use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
+use TDevAgency\CheckboxUa\Traits\Groupable;
 
-class Cashier
+class Cashier implements GroupInterface
 {
-
-    private Client $client;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    use Groupable;
 
     /**
      * @throws GuzzleException
@@ -29,21 +27,24 @@ class Cashier
      */
     public function me(): MeResponseEntity
     {
-        $data = $this->client->request('cashier/me');
+        $data = $this->getHttpClient()->request('cashier/me');
 
         return new MeResponseEntity($data);
     }
 
     /**
+     * @return ShiftResponseEntity
      * @throws GuzzleException
      * @throws JsonException
+     * @throws NoOpenShiftException
+     * @throws Exception
      */
     public function shift(): ShiftResponseEntity
     {
-        $data = $this->client->request('cashier/shift');
+        $data = $this->getHttpClient()->request('cashier/shift');
 
         if ($data === null) {
-            throw new RuntimeException('Cashier.shift: Cashier shift is not opened');
+            throw new NoOpenShiftException('Cashier.shift: Cashier shift is not opened');
         }
 
         return new ShiftResponseEntity($data);
@@ -52,10 +53,11 @@ class Cashier
     /**
      * @throws GuzzleException
      * @throws JsonException
+     * @throws Exception
      */
     public function checkSignature(): SignatureResponseEntity
     {
-        $data = $this->client->request('cashier/check-signature');
+        $data = $this->getHttpClient()->request('cashier/check-signature');
 
         return new SignatureResponseEntity($data);
     }
@@ -66,7 +68,7 @@ class Cashier
      */
     public function signIn(SignInRequestEntity $entity): SignInResponseEntity
     {
-        $data = $this->client->request('cashier/signin', 'POST', [
+        $data = $this->getHttpClient()->request('cashier/signin', 'POST', [
             'json' => [
                 'login' => $entity->getLogin(),
                 'password' => $entity->getPassword(),
@@ -75,7 +77,7 @@ class Cashier
 
         $responseEntity = new SignInResponseEntity($data);
 
-        $this->client->setAccessToken($responseEntity);
+        $this->getHttpClient()->setAccessToken($responseEntity);
 
         return $responseEntity;
     }
@@ -86,7 +88,7 @@ class Cashier
      */
     public function signOut(): bool
     {
-        $this->client->request('cashier/signout', 'POST');
+        $this->getHttpClient()->request('cashier/signout', 'POST');
 
         return true;
     }
@@ -97,7 +99,7 @@ class Cashier
      */
     public function signInPinCode(SignInRequestEntity $entity): SignInResponseEntity
     {
-        $data = $this->client->request('cashier/signinPinCode', 'POST', [
+        $data = $this->getHttpClient()->request('cashier/signinPinCode', 'POST', [
             'headers' => [
                 'X-License-Key' => $entity->getLicenseKey()
             ],
@@ -108,7 +110,7 @@ class Cashier
 
         $responseEntity = new SignInResponseEntity($data);
 
-        $this->client->setAccessToken($responseEntity);
+        $this->getHttpClient()->setAccessToken($responseEntity);
 
         return $responseEntity;
     }

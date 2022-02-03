@@ -7,7 +7,10 @@ use TDevAgency\CheckboxUa\Entities\Responses\PaymentResponseEntity;
 
 trait HasPayments
 {
-
+    /**
+     * @param array|null $payments
+     * @return $this
+     */
     protected function setPayments(?array $payments = []): self
     {
         $collection = new Collection();

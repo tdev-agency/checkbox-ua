@@ -14,6 +14,10 @@ use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 trait ResponseEntity
 {
 
+    /**
+     * @param array $data
+     * @throws Exception
+     */
     public function __construct(array $data = [])
     {
         array_walk(

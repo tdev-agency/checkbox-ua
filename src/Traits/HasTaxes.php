@@ -7,7 +7,10 @@ use TDevAgency\CheckboxUa\Entities\Responses\TaxResponseEntity;
 
 trait HasTaxes
 {
-
+    /**
+     * @param array|null $taxes
+     * @return $this
+     */
     protected function setTaxes(?array $taxes = []): self
     {
         $collection = new Collection();

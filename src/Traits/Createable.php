@@ -2,7 +2,6 @@
 
 namespace TDevAgency\CheckboxUa\Traits;
 
-
 trait Createable
 {
     public function __construct(array $data)

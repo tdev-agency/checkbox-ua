@@ -2,6 +2,8 @@
 
 namespace TDevAgency\CheckboxUa\Groups;
 
+use Exception;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -9,11 +11,12 @@ use JsonException;
 use TDevAgency\CheckboxUa\Entities\Requests\ShiftCloseRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
-use TDevAgency\CheckboxUa\Traits\Group;
+use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
+use TDevAgency\CheckboxUa\Traits\Groupable;
 
-class Shifts
+class Shifts implements GroupInterface
 {
-    use Group;
+    use Groupable;
 
     /**
      * @param array $statuses
@@ -30,9 +33,10 @@ class Shifts
         int $offset = 0,
         bool $desc = false
     ): Collection {
-        $response = $this->client->request('shifts', 'GET', [
-            'query' => compact('statuses', 'limit', 'offset', 'desc')
-        ]);
+        $response = $this->getHttpClient()
+            ->request('shifts', 'GET', [
+                'query' => compact('statuses', 'limit', 'offset', 'desc')
+            ]);
         if (empty($response['results'])) {
             return Collection::make([]);
         }
@@ -45,7 +49,7 @@ class Shifts
     }
 
     /**
-     * @param string $license_key
+     * @param SignInRequestEntity $signInRequestEntity
      * @param string|null $id
      * @param string|null $fiscal_code
      * @param string|null $fiscal_date
@@ -59,12 +63,13 @@ class Shifts
         ?string $fiscal_code = null,
         ?string $fiscal_date = null
     ): ShiftResponseEntity {
-        $result = $this->client->request('shifts', 'POST', [
-            'headers' => [
-                'X-License-Key' => $signInRequestEntity->getLicenseKey(),
-            ],
-            'json' => array_filter(compact('id', 'fiscal_code', 'fiscal_date'))
-        ]);
+        $result = $this->getHttpClient()
+            ->request('shifts', 'POST', [
+                'headers' => [
+                    'X-License-Key' => $signInRequestEntity->getLicenseKey(),
+                ],
+                'json' => array_filter(compact('id', 'fiscal_code', 'fiscal_date'))
+            ]);
         $entity = new ShiftResponseEntity($result);
         if ($entity->getStatus()->isCreated()) {
             return $this->getShift($entity->getId(), ['delay' => 5000]);
@@ -78,10 +83,11 @@ class Shifts
      * @return ShiftResponseEntity
      * @throws GuzzleException
      * @throws JsonException
+     * @throws Exception
      */
     public function getShift(string $id, array $options = []): ShiftResponseEntity
     {
-        $result = $this->client->request('shifts/'.$id, 'GET', $options);
+        $result = $this->getHttpClient()->request('shifts/'.$id, 'GET', $options);
         return new ShiftResponseEntity($result);
     }
 
@@ -90,6 +96,7 @@ class Shifts
      * @return ShiftResponseEntity
      * @throws GuzzleException
      * @throws JsonException
+     * @throws Exception
      */
     public function closeShift(?ShiftCloseRequestEntity $entity = null): ShiftResponseEntity
     {
@@ -99,9 +106,10 @@ class Shifts
             $json = [];
         }
 
-        $result = $this->client->request('shifts/close', 'POST', [
-            'json' => $json
-        ]);
+        $result = $this->getHttpClient()
+            ->request('shifts/close', 'POST', [
+                'json' => $json
+            ]);
 
         return new ShiftResponseEntity($result);
     }
