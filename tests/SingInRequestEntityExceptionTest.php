@@ -7,9 +7,10 @@ use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Exceptions\ForbiddenException;
+use TDevAgency\CheckboxUa\Exceptions\PropertyValidationException;
 use TDevAgency\CheckboxUa\Groups\Cashier;
 
-class IncorrectSignInTest extends TestCase
+class SingInRequestEntityExceptionTest extends TestCase
 {
 
     /**
@@ -17,13 +18,8 @@ class IncorrectSignInTest extends TestCase
      */
     public function testIncorrectSignIn(): void
     {
-        $this->expectException(ForbiddenException::class);
-        $entity = SignInRequestEntity::create([
-            'login' => Factory::create()->userName(),
-            'password' => Factory::create()->password(),
-            'license_key' => $_ENV['LICENSE_KEY']
-        ]);
-        new CheckboxUa(CheckboxUa::DRIVER_SIGNIN, $entity);
+        $this->expectException(PropertyValidationException::class);
+        $entity = SignInRequestEntity::create([]);
     }
 
 }

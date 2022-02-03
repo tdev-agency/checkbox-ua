@@ -9,11 +9,14 @@ class SignInRequestEntity implements CreateEntityInterface
 {
     use Createable;
 
+    protected array $required = [
+        'license_key',
+    ];
+
     private string $login;
     private string $password;
     private string $license_key;
     private string $pin_code;
-
 
     /**
      * @return string

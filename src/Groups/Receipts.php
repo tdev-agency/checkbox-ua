@@ -2,24 +2,20 @@
 
 namespace TDevAgency\CheckboxUa\Groups;
 
-use TDevAgency\CheckboxUa\HttpClient;
 use TDevAgency\CheckboxUa\Entities\Requests\ReceiptRequestEntity;
+use TDevAgency\CheckboxUa\HttpClient\HttpClient;
+use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
+use TDevAgency\CheckboxUa\Traits\Groupable;
 
-class Receipts
+class Receipts implements GroupInterface
 {
-    private HttpClient $client;
+    use Groupable;
 
-    public function __construct(HttpClient $client)
+    public function sell(ReceiptRequestEntity $receiptEntity): void
     {
-        $this->client = $client;
-    }
-
-    public function create(ReceiptRequestEntity $receiptEntity)
-    {
-        $res = $this->client->request('receipts/sell', 'POST', [
+        $res = $this->client->post('receipts/sell', [
             'json' => $receiptEntity->toArray()
         ]);
-
     }
 
 }

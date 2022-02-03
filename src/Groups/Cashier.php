@@ -6,44 +6,41 @@ namespace TDevAgency\CheckboxUa\Groups;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
-use RuntimeException;
-use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
-use TDevAgency\CheckboxUa\HttpClient;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignInResponseEntity;
+use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 use TDevAgency\CheckboxUa\Traits\Groupable;
+use Throwable;
 
 class Cashier implements GroupInterface
 {
     use Groupable;
 
     /**
-     * @throws GuzzleException
-     * @throws JsonException
+     * @return MeResponseEntity
+     * @throws Throwable
      */
     public function me(): MeResponseEntity
     {
-        $data = $this->getHttpClient()->request('cashier/me');
+        $data = $this->getHttpClient()->get('cashier/me');
 
         return new MeResponseEntity($data);
     }
 
     /**
      * @return ShiftResponseEntity
-     * @throws GuzzleException
-     * @throws JsonException
      * @throws NoOpenShiftException
-     * @throws Exception
+     * @throws Throwable
      */
     public function shift(): ShiftResponseEntity
     {
-        $data = $this->getHttpClient()->request('cashier/shift');
+        $data = $this->getHttpClient()->get('cashier/shift');
 
-        if ($data === null) {
+        if (empty($data)) {
             throw new NoOpenShiftException('Cashier.shift: Cashier shift is not opened');
         }
 
@@ -51,24 +48,24 @@ class Cashier implements GroupInterface
     }
 
     /**
-     * @throws GuzzleException
-     * @throws JsonException
-     * @throws Exception
+     * @return SignatureResponseEntity
+     * @throws Throwable
      */
     public function checkSignature(): SignatureResponseEntity
     {
-        $data = $this->getHttpClient()->request('cashier/check-signature');
+        $data = $this->getHttpClient()->get('cashier/check-signature');
 
         return new SignatureResponseEntity($data);
     }
 
     /**
-     * @throws GuzzleException
-     * @throws JsonException
+     * @param SignInRequestEntity $entity
+     * @return SignInResponseEntity
+     * @throws Exception
      */
     public function signIn(SignInRequestEntity $entity): SignInResponseEntity
     {
-        $data = $this->getHttpClient()->request('cashier/signin', 'POST', [
+        $data = $this->getHttpClient()->post('cashier/signin', [
             'json' => [
                 'login' => $entity->getLogin(),
                 'password' => $entity->getPassword(),
@@ -77,29 +74,31 @@ class Cashier implements GroupInterface
 
         $responseEntity = new SignInResponseEntity($data);
 
-        $this->getHttpClient()->setAccessToken($responseEntity);
+        $this->getHttpClient()->setAccessToken($responseEntity->getAccessToken());
 
         return $responseEntity;
     }
 
     /**
-     * @throws GuzzleException
-     * @throws JsonException
+     * @return bool
+     * @throws Throwable
      */
     public function signOut(): bool
     {
-        $this->getHttpClient()->request('cashier/signout', 'POST');
+        $this->getHttpClient()->post('cashier/signout');
 
+        $this->getHttpClient()->setAccessToken(null);
         return true;
     }
 
     /**
-     * @throws GuzzleException
-     * @throws JsonException
+     * @param SignInRequestEntity $entity
+     * @return SignInResponseEntity
+     * @throws Throwable
      */
     public function signInPinCode(SignInRequestEntity $entity): SignInResponseEntity
     {
-        $data = $this->getHttpClient()->request('cashier/signinPinCode', 'POST', [
+        $data = $this->getHttpClient()->post('cashier/signinPinCode', [
             'headers' => [
                 'X-License-Key' => $entity->getLicenseKey()
             ],
@@ -110,7 +109,7 @@ class Cashier implements GroupInterface
 
         $responseEntity = new SignInResponseEntity($data);
 
-        $this->getHttpClient()->setAccessToken($responseEntity);
+        $this->getHttpClient()->setAccessToken($responseEntity->getAccessToken());
 
         return $responseEntity;
     }

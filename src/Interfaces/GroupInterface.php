@@ -2,12 +2,9 @@
 
 namespace TDevAgency\CheckboxUa\Interfaces;
 
-use TDevAgency\CheckboxUa\HttpClient;
+use TDevAgency\CheckboxUa\HttpClient\HttpClient;
 
 interface GroupInterface
 {
     public static function create(HttpClient $client);
-
-    public function getHttpClient(): HttpClient;
-
 }

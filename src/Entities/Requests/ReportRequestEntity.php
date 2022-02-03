@@ -148,6 +148,4 @@ class ReportRequestEntity implements Arrayable, CreateEntityInterface
     {
         return $this->created_at;
     }
-
-
 }

@@ -2,7 +2,7 @@
 
 namespace TDevAgency\CheckboxUa\Traits;
 
-use TDevAgency\CheckboxUa\HttpClient;
+use TDevAgency\CheckboxUa\HttpClient\HttpClient;
 
 trait Groupable
 {
@@ -18,7 +18,7 @@ trait Groupable
         return new static($client);
     }
 
-    public function getHttpClient(): HttpClient
+    protected function getHttpClient(): HttpClient
     {
         return $this->client;
     }

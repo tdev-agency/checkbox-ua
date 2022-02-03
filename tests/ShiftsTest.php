@@ -7,24 +7,29 @@ use Illuminate\Support\Collection;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\CheckboxUa;
-use TDevAgency\CheckboxUa\Groups\Cashier;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
-use TDevAgency\CheckboxUa\Entities\Responses\SignInResponseEntity;
+use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
+use TDevAgency\CheckboxUa\Exceptions\OpenedShiftException;
 use TDevAgency\CheckboxUa\Groups\Shifts;
+use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
+use Throwable;
 
 class ShiftsTest extends TestCase
 {
 
-    public function testAuthorizeClient()
+    public function testAuthorizeClient(): GroupInterface
     {
-        $client = new CheckboxUa();
-        $this->assertInstanceOf(CheckboxUa::class, $client);
         $signInRequestEntity = SignInRequestEntity::create(
-            ['login' => $_ENV['LOGIN'], 'password' => $_ENV['PASSWORD']]
+            [
+                'login' => $_ENV['LOGIN'],
+                'password' => $_ENV['PASSWORD'],
+                'license_key' => $_ENV['LICENSE_KEY']
+            ]
         );
-        $signInResponseEntity = $client->make(Cashier::class)->signIn($signInRequestEntity);
-        $this->assertInstanceOf(SignInResponseEntity::class, $signInResponseEntity);
+        $client = new CheckboxUa(CheckboxUa::DRIVER_SIGNIN, $signInRequestEntity);
+        $this->assertInstanceOf(CheckboxUa::class, $client);
+
         return $client->make(Shifts::class);
     }
 
@@ -32,25 +37,30 @@ class ShiftsTest extends TestCase
      * @depends testAuthorizeClient
      * @param Shifts $shifts
      * @return void
+     * @throws Throwable
      */
     public function testCloseShift(Shifts $shifts): void
     {
-        $result = $shifts->closeShift();
-        $this->assertInstanceOf(ShiftResponseEntity::class, $result);
+        try {
+            $this->assertInstanceOf(ShiftResponseEntity::class, $shifts->closeShift());
+        } catch (NoOpenShiftException $exception) {
+            $this->assertInstanceOf(NoOpenShiftException::class, $exception);
+        }
     }
 
     /**
      * @depends testAuthorizeClient
      * @param Shifts $shifts
      * @return void
-     * @throws GuzzleException
-     * @throws JsonException
+     * @throws Throwable
      */
     public function testCreateShift(Shifts $shifts): void
     {
-//        $signInRequestEntity = SignInRequestEntity::create(['license_key' => $_ENV['LICENSE_KEY']]);
-//        $result = $shifts->createShift($signInRequestEntity);
-//        $this->assertInstanceOf(ShiftResponseEntity::class, $result);
+        try {
+            $this->assertInstanceOf(ShiftResponseEntity::class, $shifts->createShift());
+        } catch (OpenedShiftException $exception) {
+            $this->assertInstanceOf(OpenedShiftException::class, $exception);
+        }
     }
 
 
@@ -61,7 +71,7 @@ class ShiftsTest extends TestCase
      * @throws GuzzleException
      * @throws JsonException
      */
-    public function testGetShifts(Shifts $shifts)
+    public function testGetShifts(Shifts $shifts): void
     {
         $result = $shifts->getShifts();
         $this->assertInstanceOf(Collection::class, $result);

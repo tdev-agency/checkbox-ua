@@ -2,91 +2,78 @@
 
 namespace TDevAgency\CheckboxUa\Tests;
 
-use GuzzleHttp\Exception\GuzzleException;
-use JsonException;
 use PHPUnit\Framework\TestCase;
-use ReflectionException;
 use TDevAgency\CheckboxUa\CheckboxUa;
-use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
-use TDevAgency\CheckboxUa\HttpClient;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignInResponseEntity;
+use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
+use Throwable;
 
 class CashierTest extends TestCase
 {
-    public function testInitClient(): CheckboxUa
+    /**
+     * @return CheckboxUa
+     */
+    public function testSingInWithLoginPassword(): CheckboxUa
     {
-        $client = new CheckboxUa();
+        $entity = SignInRequestEntity::create([
+            'login' => $_ENV['LOGIN'],
+            'password' => $_ENV['PASSWORD'],
+            'license_key' => $_ENV['LICENSE_KEY'],
+        ]);
+        $client = new CheckboxUa(CheckboxUa::DRIVER_SIGNIN, $entity);
         $this->assertInstanceOf(CheckboxUa::class, $client);
 
         return $client;
     }
 
     /**
-     * @depends testInitClient
-     * @param CheckboxUa $client
-     * @return SignInResponseEntity
-     * @throws GuzzleException
-     * @throws JsonException
-     * @throws ReflectionException
+     * @return CheckboxUa
      */
-    public function testSignIn(CheckboxUa $client): SignInResponseEntity
-    {
-        $entity = SignInRequestEntity::create(['login' => $_ENV['LOGIN'], 'password' => $_ENV['PASSWORD']]);
-        $data = $client->getCashier()->signIn($entity);
-
-        $this->assertInstanceOf(SignInResponseEntity::class, $data);
-
-        return $data;
-    }
-
-    /**
-     * @depends testInitClient
-     * @param CheckboxUa $client
-     * @return SignInResponseEntity
-     * @throws GuzzleException
-     * @throws JsonException
-     */
-    public function testSignInPinCode(CheckboxUa $client): SignInResponseEntity
+    public function testSingInWithPinCode(): CheckboxUa
     {
         $entity = SignInRequestEntity::create(['license_key' => $_ENV['LICENSE_KEY'], 'pin_code' => $_ENV['PIN_CODE']]);
 
-        $data = $client->getCashier()->signInPinCode($entity);
+        $client = new CheckboxUa(CheckboxUa::DRIVER_SIGNIN_PIN_CODE, $entity);
+        $this->assertInstanceOf(CheckboxUa::class, $client);
 
-        $this->assertInstanceOf(SignInResponseEntity::class, $data);
-
-        return $data;
+        return $client;
     }
 
-
     /**
-     * @depends testInitClient
-     * @depends testSignIn
+     * @depends testSingInWithLoginPassword
      * @param CheckboxUa $client
-     * @param SignInResponseEntity $entity
      * @return void
-     * @throws GuzzleException
-     * @throws JsonException
+     * @throws Throwable
      */
-    public function testMe(CheckboxUa $client, SignInResponseEntity $entity): void
+    public function testMeWithLogin(CheckboxUa $client): void
     {
         $res = $client->getCashier()->me();
         $this->assertInstanceOf(MeResponseEntity::class, $res);
     }
 
     /**
-     * @depends testInitClient
-     * @depends testSignIn
+     * @depends testSingInWithPinCode
      * @param CheckboxUa $client
-     * @param SignInResponseEntity $entity
      * @return void
-     * @throws GuzzleException
-     * @throws JsonException
+     * @throws Throwable
      */
-    public function testShift(CheckboxUa $client, SignInResponseEntity $entity): void
+    public function testMeWithPinCode(CheckboxUa $client): void
+    {
+        $res = $client->getCashier()->me();
+        $this->assertInstanceOf(MeResponseEntity::class, $res);
+    }
+
+    /**
+     * @depends testSingInWithLoginPassword
+     * @param CheckboxUa $client
+     * @return void
+     * @throws Throwable
+     */
+    public function testShift(CheckboxUa $client): void
     {
         try {
             $res = $client->getCashier()->shift();
@@ -97,31 +84,25 @@ class CashierTest extends TestCase
     }
 
     /**
-     * @depends testInitClient
-     * @depends testSignIn
+     * @depends testSingInWithLoginPassword
      * @param CheckboxUa $client
-     * @param SignInResponseEntity $entity
      * @return void
-     * @throws GuzzleException
-     * @throws JsonException
+     * @throws Throwable
      */
-    public function testCheckSignature(CheckboxUa $client, SignInResponseEntity $entity): void
+    public function testCheckSignature(CheckboxUa $client): void
     {
         $res = $client->getCashier()->checkSignature();
         $this->assertInstanceOf(SignatureResponseEntity::class, $res);
     }
 
     /**
-     * @depends testInitClient
-     * @depends testSignIn
+     * @depends testSingInWithLoginPassword
      *
-     * @param HttpClient $client
-     * @param SignInResponseEntity $signInResponseEntity
+     * @param CheckboxUa $client
      * @return void
-     * @throws GuzzleException
-     * @throws JsonException
+     * @throws Throwable
      */
-    public function testSignOut(CheckboxUa $client, SignInResponseEntity $signInResponseEntity): void
+    public function testSignOut(CheckboxUa $client): void
     {
         $this->assertIsBool($client->getCashier()->signOut());
     }
