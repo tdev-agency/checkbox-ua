@@ -15,7 +15,7 @@ trait ResponseEntity
 {
 
     /**
-     * @param array $data
+     * @param  array $data
      * @throws Exception
      */
     public function __construct(array $data = [])
@@ -31,7 +31,8 @@ trait ResponseEntity
                     } elseif (in_array(
                         $key,
                         ['created_at', 'updated_at', 'subscription_exp', 'certificate_end', 'setup_date']
-                    )) {
+                    )
+                    ) {
                         $value = new DateTime($value);
                     }
 

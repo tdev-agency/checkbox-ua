@@ -9,7 +9,7 @@ use TDevAgency\CheckboxUa\Entities\Responses\PaymentResponseEntity;
 trait HasPayments
 {
     /**
-     * @param array|null $payments
+     * @param  array|null $payments
      * @return $this
      * @throws Exception
      */

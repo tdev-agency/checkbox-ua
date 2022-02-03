@@ -25,21 +25,24 @@ class ShiftResponseEntity implements Arrayable
 
     public function __construct(array $data = [])
     {
-        array_walk($data, function ($value, $key) {
-            if ($value !== null && property_exists(self::class, $key)) {
-                if ($key === 'status') {
-                    $this->$key = new ShiftStatusResponseEntity($value);
-                } elseif ($key === 'z_report') {
-                    $this->$key = new ReportResponseEntity($value);
-                } elseif ($key === 'taxes') {
-                    $this->setTaxes($value);
-                } elseif (in_array($key, ['created_at', 'opened_at', 'closed_at'])) {
-                    $this->$key = new DateTime($value);
-                } else {
-                    $this->$key = $value;
+        array_walk(
+            $data,
+            function ($value, $key) {
+                if ($value !== null && property_exists(self::class, $key)) {
+                    if ($key === 'status') {
+                        $this->$key = new ShiftStatusResponseEntity($value);
+                    } elseif ($key === 'z_report') {
+                        $this->$key = new ReportResponseEntity($value);
+                    } elseif ($key === 'taxes') {
+                        $this->setTaxes($value);
+                    } elseif (in_array($key, ['created_at', 'opened_at', 'closed_at'])) {
+                        $this->$key = new DateTime($value);
+                    } else {
+                        $this->$key = $value;
+                    }
                 }
             }
-        });
+        );
     }
 
     /**

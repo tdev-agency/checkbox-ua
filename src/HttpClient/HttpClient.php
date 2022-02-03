@@ -29,9 +29,11 @@ final class HttpClient
 
     public function __construct(bool $isDevMode = false)
     {
-        $this->http = new GuzzleHttpClient([
+        $this->http = new GuzzleHttpClient(
+            [
             'base_uri' => ! $isDevMode ? self::LIVE_API : self::DEV_API,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -43,10 +45,10 @@ final class HttpClient
     }
 
     /**
-     * @param string $uri
-     * @param string $method
-     * @param array $options
-     * @param bool $catRetry
+     * @param  string $uri
+     * @param  string $method
+     * @param  array  $options
+     * @param  bool   $catRetry
      * @return array|null
      * @throws ForbiddenException
      * @throws GuzzleException
@@ -124,7 +126,7 @@ final class HttpClient
     }
 
     /**
-     * @param string $contents
+     * @param  string $contents
      * @return array
      */
     private function getJson(string $contents): ?array
@@ -141,8 +143,8 @@ final class HttpClient
     }
 
     /**
-     * @param string $uri
-     * @param array $options
+     * @param  string $uri
+     * @param  array  $options
      * @return array
      * @throws Throwable
      */
@@ -152,7 +154,7 @@ final class HttpClient
     }
 
     /**
-     * @param string|null $accessToken
+     * @param  string|null $accessToken
      * @return $this
      */
     public function setAccessToken(?string $accessToken = null): HttpClient
@@ -162,7 +164,7 @@ final class HttpClient
     }
 
     /**
-     * @param string $licenseKey
+     * @param  string $licenseKey
      * @return $this
      */
     public function setLicenseKey(string $licenseKey): HttpClient
@@ -172,9 +174,9 @@ final class HttpClient
     }
 
     /**
-     * @param Cashier $cashier
-     * @param SignInRequestEntity $signInRequestEntity
-     * @param string $signInDriver
+     * @param  Cashier             $cashier
+     * @param  SignInRequestEntity $signInRequestEntity
+     * @param  string              $signInDriver
      * @return $this
      */
     public function setCashier(

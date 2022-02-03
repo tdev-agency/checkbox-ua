@@ -45,18 +45,21 @@ class ReportResponseEntity implements Arrayable
 
     public function __construct(array $data = [])
     {
-        array_walk($data, function ($value, $key) {
-            if ($value !== null && property_exists(self::class, $key)) {
-                if ($key === 'payments') {
-                    $this->setPayments($value);
-                } elseif ($key === 'taxes') {
-                    $this->setTaxes($value);
-                } elseif (in_array($key, ['created_at', 'updated_at', 'updated_date'])) {
-                    $this->$key = new DateTime($value);
-                } else {
-                    $this->$key = $value;
+        array_walk(
+            $data,
+            function ($value, $key) {
+                if ($value !== null && property_exists(self::class, $key)) {
+                    if ($key === 'payments') {
+                        $this->setPayments($value);
+                    } elseif ($key === 'taxes') {
+                        $this->setTaxes($value);
+                    } elseif (in_array($key, ['created_at', 'updated_at', 'updated_date'])) {
+                        $this->$key = new DateTime($value);
+                    } else {
+                        $this->$key = $value;
+                    }
                 }
             }
-        });
+        );
     }
 }

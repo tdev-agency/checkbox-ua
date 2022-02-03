@@ -40,7 +40,7 @@ final class CheckboxUa
     }
 
     /**
-     * @param string|null $accessToken
+     * @param  string|null $accessToken
      * @return void
      */
     private function signIn(string $accessToken = null): void
@@ -71,8 +71,8 @@ final class CheckboxUa
     private function checkImplementsGroupInterface($className): void
     {
         try {
-            if (! (new ReflectionClass($className))
-                ->implementsInterface(GroupInterface::class)) {
+            if (! (new ReflectionClass($className))->implementsInterface(GroupInterface::class)
+            ) {
                 throw new RuntimeException($className.' does not implement interface '.GroupInterface::class);
             }
         } catch (ReflectionException $e) {
@@ -81,7 +81,7 @@ final class CheckboxUa
     }
 
     /**
-     * @param string $class
+     * @param  string $class
      * @return GroupInterface
      */
     public function make(string $class): GroupInterface

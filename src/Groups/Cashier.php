@@ -56,18 +56,21 @@ class Cashier implements GroupInterface
     }
 
     /**
-     * @param SignInRequestEntity $entity
+     * @param  SignInRequestEntity $entity
      * @return SignInResponseEntity
      * @throws Exception
      */
     public function signIn(SignInRequestEntity $entity): SignInResponseEntity
     {
-        $data = $this->getHttpClient()->post('cashier/signin', [
+        $data = $this->getHttpClient()->post(
+            'cashier/signin',
+            [
             'json' => [
                 'login' => $entity->getLogin(),
                 'password' => $entity->getPassword(),
             ]
-        ]);
+            ]
+        );
 
         $responseEntity = new SignInResponseEntity($data);
 
@@ -89,20 +92,23 @@ class Cashier implements GroupInterface
     }
 
     /**
-     * @param SignInRequestEntity $entity
+     * @param  SignInRequestEntity $entity
      * @return SignInResponseEntity
      * @throws Throwable
      */
     public function signInPinCode(SignInRequestEntity $entity): SignInResponseEntity
     {
-        $data = $this->getHttpClient()->post('cashier/signinPinCode', [
+        $data = $this->getHttpClient()->post(
+            'cashier/signinPinCode',
+            [
             'headers' => [
                 'X-License-Key' => $entity->getLicenseKey()
             ],
             'json' => [
                 'pin_code' => $entity->getPinCode(),
             ]
-        ]);
+            ]
+        );
 
         $responseEntity = new SignInResponseEntity($data);
 

@@ -18,10 +18,10 @@ class Shifts implements GroupInterface
     use Groupable;
 
     /**
-     * @param array $statuses
-     * @param int $limit
-     * @param int $offset
-     * @param bool $desc
+     * @param  array $statuses
+     * @param  int   $limit
+     * @param  int   $offset
+     * @param  bool  $desc
      * @return Collection
      * @throws Throwable
      */
@@ -32,9 +32,12 @@ class Shifts implements GroupInterface
         bool $desc = false
     ): Collection {
         $response = $this->getHttpClient()
-            ->get('shifts', [
+            ->get(
+                'shifts',
+                [
                 'query' => compact('statuses', 'limit', 'offset', 'desc')
-            ]);
+                ]
+            );
         if (empty($response['results'])) {
             return Collection::make([]);
         }
@@ -47,9 +50,9 @@ class Shifts implements GroupInterface
     }
 
     /**
-     * @param string|null $id
-     * @param string|null $fiscal_code
-     * @param string|null $fiscal_date
+     * @param  string|null $id
+     * @param  string|null $fiscal_code
+     * @param  string|null $fiscal_date
      * @return ShiftResponseEntity
      * @throws Throwable
      */
@@ -60,9 +63,12 @@ class Shifts implements GroupInterface
     ): ShiftResponseEntity {
         try {
             $result = $this->getHttpClient()
-                ->post('shifts', [
+                ->post(
+                    'shifts',
+                    [
                     'json' => array_filter(compact('id', 'fiscal_code', 'fiscal_date'))
-                ]);
+                    ]
+                );
             $entity = new ShiftResponseEntity($result);
             if ($entity->getStatus()->isCreated()) {
                 return $this->getShift($entity->getId(), ['delay' => 5000]);
@@ -77,8 +83,8 @@ class Shifts implements GroupInterface
     }
 
     /**
-     * @param string $id
-     * @param array $options
+     * @param  string $id
+     * @param  array  $options
      * @return ShiftResponseEntity
      * @throws Throwable
      */
@@ -89,7 +95,7 @@ class Shifts implements GroupInterface
     }
 
     /**
-     * @param ShiftCloseRequestEntity|null $entity
+     * @param  ShiftCloseRequestEntity|null $entity
      * @return ShiftResponseEntity
      * @throws Throwable
      */
@@ -103,9 +109,12 @@ class Shifts implements GroupInterface
 
         try {
             $result = $this->getHttpClient()
-                ->post('shifts/close', [
+                ->post(
+                    'shifts/close',
+                    [
                     'json' => $json
-                ]);
+                    ]
+                );
         } catch (ClientException $exception) {
             if ($exception->getCode() === 400) {
                 throw new NoOpenShiftException($exception->getMessage());

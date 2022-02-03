@@ -12,8 +12,11 @@ class Receipts implements GroupInterface
 
     public function sell(ReceiptRequestEntity $receiptEntity): void
     {
-        $res = $this->client->post('receipts/sell', [
+        $res = $this->client->post(
+            'receipts/sell',
+            [
             'json' => $receiptEntity->toArray()
-        ]);
+            ]
+        );
     }
 }

@@ -9,7 +9,7 @@ use TDevAgency\CheckboxUa\Entities\Responses\TaxResponseEntity;
 trait HasTaxes
 {
     /**
-     * @param array|null $taxes
+     * @param  array|null $taxes
      * @return $this
      * @throws Exception
      */
