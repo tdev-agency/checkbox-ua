@@ -9,4 +9,6 @@ interface ShiftStatusInterface
     public const OPENED = 'OPENED';
     public const CLOSING = 'CLOSING';
     public const CLOSED = 'CLOSED';
+
+    public function __toString(): string;
 }

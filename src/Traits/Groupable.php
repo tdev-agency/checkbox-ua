@@ -8,7 +8,7 @@ trait Groupable
 {
     private HttpClient $client;
 
-    private function __construct(HttpClient $client)
+    public function __construct(HttpClient $client)
     {
         $this->client = $client;
     }

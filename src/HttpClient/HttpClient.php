@@ -43,20 +43,20 @@ final class HttpClient
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      * @param string $method
      * @param array $options
      * @param bool $catRetry
-     * @return mixed
+     * @return array|null
      * @throws ForbiddenException
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws Throwable
      * @throws UnauthorizedException
      * @throws UnprocessableEntityException
-     * @throws GuzzleException
      */
     private function request(
-        $uri,
+        string $uri,
         string $method = 'GET',
         array $options = [],
         bool $catRetry = true

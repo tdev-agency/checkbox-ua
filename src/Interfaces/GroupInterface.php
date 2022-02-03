@@ -6,5 +6,7 @@ use TDevAgency\CheckboxUa\HttpClient\HttpClient;
 
 interface GroupInterface
 {
-    public static function create(HttpClient $client);
+    public function __construct(HttpClient $client);
+
+    public static function create(HttpClient $client): GroupInterface;
 }

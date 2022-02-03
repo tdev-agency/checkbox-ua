@@ -12,7 +12,8 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "fakerphp/faker": "^1.19",
-    "squizlabs/php_codesniffer": "^3.6"
+    "squizlabs/php_codesniffer": "^3.6",
+    "phpstan/phpstan": "1.4.x-dev"
   },
   "license": "MIT",
   "autoload": {
@@ -29,14 +30,13 @@
   ],
   "minimum-stability": "stable",
   "scripts": {
+    "code-analyze": [
+      "vendor/bin/phpcbf --extensions=php --encoding=utf-8 -n -p --standard=PSR2 ./src/",
+      "vendor/bin/phpcs --extensions=php --encoding=utf-8 -n -p --standard=PSR2 ./src/",
+      "vendor/bin/phpstan analyse src --no-progress --level 5"
+    ],
     "phpunit": [
       "vendor/phpunit/phpunit/phpunit"
-    ],
-    "phpcs": [
-      "./vendor/bin/phpcs --extensions=php --standard=PSR2 ./src/"
-    ],
-    "phpcbf": [
-      "vendor/bin/phpcbf --extensions=php --standard=PSR2 ./src/"
     ]
   }
 }
