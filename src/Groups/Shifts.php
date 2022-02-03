@@ -6,7 +6,6 @@ use GuzzleHttp\Exception\ClientException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use TDevAgency\CheckboxUa\Entities\Requests\ShiftCloseRequestEntity;
-use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
 use TDevAgency\CheckboxUa\Exceptions\OpenedShiftException;

@@ -10,5 +10,4 @@ class SignatureResponseEntity
 
     private bool $online = false;
     private string $type;
-
 }

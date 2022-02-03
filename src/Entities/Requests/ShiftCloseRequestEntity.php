@@ -16,6 +16,4 @@ class ShiftCloseRequestEntity implements Arrayable, CreateEntityInterface
     private ?ReportRequestEntity $report = null;
     private ?string $fiscal_code = null;
     private ?string $fiscal_date = null;
-
-
 }

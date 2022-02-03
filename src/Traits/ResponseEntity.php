@@ -23,7 +23,7 @@ trait ResponseEntity
         array_walk(
         /**
          * @throws Exception
-         */ $data,
+         */            $data,
             function ($value, $key) {
                 if ($value !== null && property_exists(self::class, $key)) {
                     if ($key === 'organization') {

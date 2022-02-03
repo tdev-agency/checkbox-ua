@@ -189,5 +189,3 @@ final class HttpClient
         return $this;
     }
 }
-
-

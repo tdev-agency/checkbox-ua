@@ -2,7 +2,6 @@
 
 namespace TDevAgency\CheckboxUa\Groups;
 
-use GuzzleHttp\Exception\ClientException;
 use TDevAgency\CheckboxUa\Entities\Responses\OrganizationReceiptSettingsResponseEntity;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 use TDevAgency\CheckboxUa\Traits\Groupable;

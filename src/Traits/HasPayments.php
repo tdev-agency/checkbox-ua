@@ -2,6 +2,7 @@
 
 namespace TDevAgency\CheckboxUa\Traits;
 
+use Exception;
 use Illuminate\Support\Collection;
 use TDevAgency\CheckboxUa\Entities\Responses\PaymentResponseEntity;
 
@@ -10,6 +11,7 @@ trait HasPayments
     /**
      * @param array|null $payments
      * @return $this
+     * @throws Exception
      */
     protected function setPayments(?array $payments = []): self
     {

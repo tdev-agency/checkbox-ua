@@ -73,5 +73,4 @@ class OrganizationResponseEntity implements Arrayable
     {
         return $this->subscription_exp;
     }
-
 }

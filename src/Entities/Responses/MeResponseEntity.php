@@ -100,5 +100,4 @@ class MeResponseEntity implements Arrayable
     {
         return $this->organization;
     }
-
 }

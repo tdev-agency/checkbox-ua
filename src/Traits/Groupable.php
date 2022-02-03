@@ -22,5 +22,4 @@ trait Groupable
     {
         return $this->client;
     }
-
 }

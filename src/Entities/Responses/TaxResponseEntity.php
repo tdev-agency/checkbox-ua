@@ -31,6 +31,4 @@ class TaxResponseEntity implements Arrayable
     private ?DateTimeInterface $created_at = null;
 
     private ?DateTimeInterface $setup_date = null;
-
-
 }

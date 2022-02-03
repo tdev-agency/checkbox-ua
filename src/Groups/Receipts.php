@@ -3,7 +3,6 @@
 namespace TDevAgency\CheckboxUa\Groups;
 
 use TDevAgency\CheckboxUa\Entities\Requests\ReceiptRequestEntity;
-use TDevAgency\CheckboxUa\HttpClient\HttpClient;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 use TDevAgency\CheckboxUa\Traits\Groupable;
 
@@ -17,5 +16,4 @@ class Receipts implements GroupInterface
             'json' => $receiptEntity->toArray()
         ]);
     }
-
 }

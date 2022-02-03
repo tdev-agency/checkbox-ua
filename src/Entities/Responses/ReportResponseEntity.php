@@ -53,11 +53,10 @@ class ReportResponseEntity implements Arrayable
                     $this->setTaxes($value);
                 } elseif (in_array($key, ['created_at', 'updated_at', 'updated_date'])) {
                     $this->$key = new DateTime($value);
-                }else {
+                } else {
                     $this->$key = $value;
                 }
             }
         });
     }
-
 }

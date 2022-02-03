@@ -11,7 +11,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "*",
-    "fakerphp/faker": "^1.19"
+    "fakerphp/faker": "^1.19",
+    "squizlabs/php_codesniffer": "^3.6"
   },
   "license": "MIT",
   "autoload": {
@@ -26,5 +27,16 @@
       "email": "contact@tdev.agency"
     }
   ],
-  "minimum-stability": "stable"
+  "minimum-stability": "stable",
+  "scripts": {
+    "phpunit": [
+      "vendor/phpunit/phpunit/phpunit"
+    ],
+    "phpcs": [
+      "./vendor/bin/phpcs --extensions=php --standard=PSR2 ./src/"
+    ],
+    "phpcbf": [
+      "vendor/bin/phpcbf --extensions=php --standard=PSR2 ./src/"
+    ]
+  }
 }

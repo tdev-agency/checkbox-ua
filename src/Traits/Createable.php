@@ -2,7 +2,6 @@
 
 namespace TDevAgency\CheckboxUa\Traits;
 
-use ReflectionProperty;
 use TDevAgency\CheckboxUa\Exceptions\PropertyValidationException;
 
 trait Createable
@@ -50,5 +49,4 @@ trait Createable
     {
         return new static($data);
     }
-
 }

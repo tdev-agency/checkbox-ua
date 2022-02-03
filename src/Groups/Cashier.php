@@ -2,10 +2,7 @@
 
 namespace TDevAgency\CheckboxUa\Groups;
 
-
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
-use JsonException;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;

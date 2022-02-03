@@ -2,7 +2,6 @@
 
 namespace TDevAgency\CheckboxUa\Entities\Requests;
 
-
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use TDevAgency\CheckboxUa\Traits\RequestEntity;
@@ -44,5 +43,4 @@ class ReceiptRequestEntity implements Arrayable
     private array $context = [];
 
     private bool $is_pawnshop = false;
-
 }

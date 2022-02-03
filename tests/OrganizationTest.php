@@ -2,20 +2,12 @@
 
 namespace TDevAgency\CheckboxUa\Tests;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Collection;
-use JsonException;
 use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Responses\OrganizationReceiptSettingsResponseEntity;
-use TDevAgency\CheckboxUa\Entities\Responses\OrganizationResponseEntity;
 use TDevAgency\CheckboxUa\Exceptions\NotFoundException;
-use TDevAgency\CheckboxUa\Groups\Cashier;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
-use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
-use TDevAgency\CheckboxUa\Entities\Responses\SignInResponseEntity;
 use TDevAgency\CheckboxUa\Groups\Organization;
-use TDevAgency\CheckboxUa\Groups\Shifts;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 use Throwable;
 

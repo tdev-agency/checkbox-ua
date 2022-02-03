@@ -31,7 +31,6 @@ final class CheckboxUa
         SignInRequestEntity $signInRequestEntity,
         string $accessToken = null,
         bool $isDevMode = false
-
     ) {
         $this->http = new HttpClient($isDevMode);
         $this->signInDriver = $signInDriver;
@@ -120,5 +119,3 @@ final class CheckboxUa
         return $this->organization;
     }
 }
-
-

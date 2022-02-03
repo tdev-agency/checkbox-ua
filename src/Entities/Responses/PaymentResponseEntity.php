@@ -24,5 +24,4 @@ class PaymentResponseEntity implements Arrayable
     private int $service_in;
 
     private int $service_out;
-
 }
