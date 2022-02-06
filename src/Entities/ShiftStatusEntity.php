@@ -1,10 +1,10 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Entities\Responses;
+namespace TDevAgency\CheckboxUa\Entities;
 
 use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 
-class ShiftStatusResponseEntity implements ShiftStatusInterface
+class ShiftStatusEntity implements ShiftStatusInterface
 {
     private string $status;
 

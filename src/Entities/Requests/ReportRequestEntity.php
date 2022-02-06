@@ -3,15 +3,14 @@
 namespace TDevAgency\CheckboxUa\Entities\Requests;
 
 use DateTimeInterface;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use TDevAgency\CheckboxUa\Interfaces\CreateEntityInterface;
 use TDevAgency\CheckboxUa\Traits\Createable;
-use TDevAgency\CheckboxUa\Traits\RequestEntity;
+use TDevAgency\CheckboxUa\Traits\Arrayable;
 
-class ReportRequestEntity implements Arrayable, CreateEntityInterface
+class ReportRequestEntity implements CreateEntityInterface
 {
-    use RequestEntity;
+    use Arrayable;
     use Createable;
 
 
@@ -30,7 +29,7 @@ class ReportRequestEntity implements Arrayable, CreateEntityInterface
     private int $returns_round_down = 0;
     private ?DateTimeInterface $created_at = null;
 
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         $this->payments = new Collection();
         $this->taxes = new Collection();

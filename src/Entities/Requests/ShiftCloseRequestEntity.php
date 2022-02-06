@@ -2,14 +2,13 @@
 
 namespace TDevAgency\CheckboxUa\Entities\Requests;
 
-use Illuminate\Contracts\Support\Arrayable;
 use TDevAgency\CheckboxUa\Interfaces\CreateEntityInterface;
+use TDevAgency\CheckboxUa\Traits\Arrayable;
 use TDevAgency\CheckboxUa\Traits\Createable;
-use TDevAgency\CheckboxUa\Traits\RequestEntity;
 
-class ShiftCloseRequestEntity implements Arrayable, CreateEntityInterface
+class ShiftCloseRequestEntity implements CreateEntityInterface
 {
-    use RequestEntity;
+    use Arrayable;
     use Createable;
 
     private bool $skip_client_name_check = false;

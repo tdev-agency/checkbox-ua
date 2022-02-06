@@ -22,81 +22,81 @@ class OrganizationReceiptSettingsResponseEntity implements Arrayable
     private OrganizationResponseEntity $organization;
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getTextGlobalHeader(): ?string
+    public function getTextGlobalHeader(): string
     {
         return $this->text_global_header;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getTextGlobalFooter(): ?string
+    public function getTextGlobalFooter(): string
     {
         return $this->text_global_footer;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlTitle(): ?string
+    public function getHtmlTitle(): string
     {
         return $this->html_title;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getEmailSubject(): ?string
+    public function getEmailSubject(): string
     {
         return $this->email_subject;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlGlobalHeader(): ?string
+    public function getHtmlGlobalHeader(): string
     {
         return $this->html_global_header;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlGlobalFooter(): ?string
+    public function getHtmlGlobalFooter(): string
     {
         return $this->html_global_footer;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlBodyStyle(): ?string
+    public function getHtmlBodyStyle(): string
     {
         return $this->html_body_style;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlReceiptStyle(): ?string
+    public function getHtmlReceiptStyle(): string
     {
         return $this->html_receipt_style;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlRulerStyle(): ?string
+    public function getHtmlRulerStyle(): string
     {
         return $this->html_ruler_style;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getHtmlLightBlockStyle(): ?string
+    public function getHtmlLightBlockStyle(): string
     {
         return $this->html_light_block_style;
     }

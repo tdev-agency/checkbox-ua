@@ -2,13 +2,15 @@
 
 namespace TDevAgency\CheckboxUa\Entities\Requests;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
-use TDevAgency\CheckboxUa\Traits\RequestEntity;
+use TDevAgency\CheckboxUa\Interfaces\CreateEntityInterface;
+use TDevAgency\CheckboxUa\Traits\Arrayable;
+use TDevAgency\CheckboxUa\Traits\Createable;
 
-class ReceiptRequestEntity implements Arrayable
+class ReceiptRequestEntity implements CreateEntityInterface
 {
-    use RequestEntity;
+    use Arrayable;
+    use Createable;
 
     private string $id;
 

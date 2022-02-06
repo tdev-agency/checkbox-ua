@@ -4,10 +4,12 @@ namespace TDevAgency\CheckboxUa\Entities\Requests;
 
 use TDevAgency\CheckboxUa\Interfaces\CreateEntityInterface;
 use TDevAgency\CheckboxUa\Traits\Createable;
+use TDevAgency\CheckboxUa\Traits\Arrayable;
 
 class SignInRequestEntity implements CreateEntityInterface
 {
     use Createable;
+    use Arrayable;
 
     protected array $required = [
         'license_key',
@@ -27,7 +29,7 @@ class SignInRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @param  string $login
+     * @param string $login
      * @return SignInRequestEntity
      */
     public function setLogin(string $login): SignInRequestEntity
@@ -45,7 +47,7 @@ class SignInRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @param  string $password
+     * @param string $password
      * @return SignInRequestEntity
      */
     public function setPassword(string $password): SignInRequestEntity
@@ -63,7 +65,7 @@ class SignInRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @param  string $license_key
+     * @param string $license_key
      * @return SignInRequestEntity
      */
     public function setLicenseKey(string $license_key): SignInRequestEntity
@@ -81,7 +83,7 @@ class SignInRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @param  string $pin_code
+     * @param string $pin_code
      * @return SignInRequestEntity
      */
     public function setPinCode(string $pin_code): SignInRequestEntity

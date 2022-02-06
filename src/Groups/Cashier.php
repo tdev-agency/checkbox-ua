@@ -56,9 +56,9 @@ class Cashier implements GroupInterface
     }
 
     /**
-     * @param  SignInRequestEntity $entity
+     * @param SignInRequestEntity $entity
      * @return SignInResponseEntity
-     * @throws Exception
+     * @throws Throwable
      */
     public function signIn(SignInRequestEntity $entity): SignInResponseEntity
     {

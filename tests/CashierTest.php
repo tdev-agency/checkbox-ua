@@ -8,14 +8,15 @@ use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\SignatureResponseEntity;
-use TDevAgency\CheckboxUa\Entities\Responses\SignInResponseEntity;
 use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
+use TDevAgency\CheckboxUa\Exceptions\PropertyValidationException;
 use Throwable;
 
 class CashierTest extends TestCase
 {
     /**
      * @return CheckboxUa
+     * @throws PropertyValidationException
      */
     public function testSingInWithLoginPassword(): CheckboxUa
     {
@@ -32,6 +33,7 @@ class CashierTest extends TestCase
 
     /**
      * @return CheckboxUa
+     * @throws PropertyValidationException
      */
     public function testSingInWithPinCode(): CheckboxUa
     {

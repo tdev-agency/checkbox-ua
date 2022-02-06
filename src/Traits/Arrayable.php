@@ -3,17 +3,14 @@
 namespace TDevAgency\CheckboxUa\Traits;
 
 use DateTimeInterface;
-use Illuminate\Contracts\Support\Arrayable;
 use ReflectionClass;
 use ReflectionProperty;
 use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
+use Illuminate\Contracts\Support\Arrayable as ArrayableInterface;
 
-trait RequestEntity
+trait Arrayable
 {
-
-    /**
-     * @return array
-     */
+    /** @return array */
     public function toArray(): array
     {
         $reflect = new ReflectionClass(self::class);
@@ -24,7 +21,7 @@ trait RequestEntity
             if ($this->$prop === null) {
                 continue;
             }
-            if ($this->$prop instanceof Arrayable) {
+            if ($this->$prop instanceof ArrayableInterface) {
                 $data[$prop] = $this->$prop->toArray();
             } elseif ($this->$prop instanceof DateTimeInterface) {
                 $data[$prop] = $this->$prop->format('c');

@@ -8,6 +8,7 @@ use RuntimeException;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Groups\Cashier;
 use TDevAgency\CheckboxUa\Groups\Organization;
+use TDevAgency\CheckboxUa\Groups\Receipts;
 use TDevAgency\CheckboxUa\Groups\Shifts;
 use TDevAgency\CheckboxUa\HttpClient\HttpClient;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
@@ -23,9 +24,16 @@ final class CheckboxUa
     private HttpClient $http;
     private ?Shifts $shifts = null;
     private ?Organization $organization = null;
+    private Receipts $receipts;
     private string $signInDriver;
     private SignInRequestEntity $signInRequestEntity;
 
+    /**
+     * @param string $signInDriver
+     * @param SignInRequestEntity $signInRequestEntity
+     * @param string|null $accessToken
+     * @param bool $isDevMode
+     */
     public function __construct(
         string $signInDriver,
         SignInRequestEntity $signInRequestEntity,
@@ -40,7 +48,7 @@ final class CheckboxUa
     }
 
     /**
-     * @param  string|null $accessToken
+     * @param string|null $accessToken
      * @return void
      */
     private function signIn(string $accessToken = null): void
@@ -57,18 +65,45 @@ final class CheckboxUa
         }
     }
 
+    /**
+     * @return Cashier
+     * @throws ReflectionException
+     */
     public function getCashier(): Cashier
     {
-        if ($this->cashier === null) {
-            $this->checkImplementsGroupInterface(Cashier::class);
-            $this->cashier = Cashier::create($this->http);
-            $this->http->setCashier($this->cashier, $this->signInRequestEntity, $this->signInDriver);
-        }
+        $group = $this->getGroup(Cashier::class);
+        $this->http->setCashier($this->cashier, $this->signInRequestEntity, $this->signInDriver);
 
-        return $this->cashier;
+        return $group;
     }
 
-    private function checkImplementsGroupInterface($className): void
+    /**
+     * @param string $class
+     * @return Shifts|Receipts|Organization|Cashier
+     * @throws ReflectionException
+     */
+    private function getGroup(string $class)
+    {
+        $reflectionClass = new ReflectionClass($class);
+        $propertyName = lcfirst($reflectionClass->getShortName());
+        if (! property_exists(self::class, $propertyName)) {
+            throw new RuntimeException('Property does not exists '.$propertyName);
+        }
+
+        if (! isset($this->$propertyName)) {
+            $this->checkImplementsGroupInterface($class);
+            /** @var GroupInterface $class */
+            $this->$propertyName = $class::create($this->http);
+        }
+
+        return $this->$propertyName;
+    }
+
+    /**
+     * @param string $className
+     * @return void
+     */
+    private function checkImplementsGroupInterface(string $className): void
     {
         try {
             if (! (new ReflectionClass($className))->implementsInterface(GroupInterface::class)
@@ -81,8 +116,9 @@ final class CheckboxUa
     }
 
     /**
-     * @param  string $class
+     * @param string $class
      * @return GroupInterface
+     * @throws ReflectionException
      */
     public function make(string $class): GroupInterface
     {
@@ -97,25 +133,25 @@ final class CheckboxUa
             throw new RuntimeException('Method does not exists '.$methodName);
         }
 
-        return $this->{$methodName}();
+        return $this->getGroup($class);
     }
 
+    /**
+     * @return Shifts
+     * @throws ReflectionException
+     */
     public function getShifts(): Shifts
     {
-        if ($this->shifts === null) {
-            $this->checkImplementsGroupInterface(Shifts::class);
-            $this->shifts = Shifts::create($this->http);
-        }
-
-        return $this->shifts;
+        return $this->getGroup(Shifts::class);
     }
 
     public function getOrganization(): Organization
     {
-        if ($this->organization === null) {
-            $this->checkImplementsGroupInterface(Organization::class);
-            $this->organization = Organization::create($this->http);
-        }
-        return $this->organization;
+        return $this->getGroup(Organization::class);
+    }
+
+    public function getReceipts(): Receipts
+    {
+        return $this->getGroup(Receipts::class);
     }
 }

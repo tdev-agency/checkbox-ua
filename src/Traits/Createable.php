@@ -9,7 +9,7 @@ trait Createable
     /**
      * @throws PropertyValidationException
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         $this->setData($data)
             ->validateRequired();
@@ -20,7 +20,7 @@ trait Createable
      */
     protected function validateRequired(): void
     {
-        if (! property_exists(self::class, 'required') || empty($this->required)) {
+        if (empty($this->required)) {
             return;
         }
 
@@ -31,7 +31,7 @@ trait Createable
         }
     }
 
-    protected function setData($data): self
+    protected function setData(array $data = []): self
     {
         foreach ($data as $key => $value) {
             if (! property_exists(self::class, $key)) {
@@ -45,7 +45,7 @@ trait Createable
     /**
      * @throws PropertyValidationException
      */
-    public static function create(array $data): self
+    public static function create(array $data = []): self
     {
         return new static($data);
     }
