@@ -33,6 +33,7 @@ final class CheckboxUa
      * @param SignInRequestEntity $signInRequestEntity
      * @param string|null $accessToken
      * @param bool $isDevMode
+     * @throws ReflectionException
      */
     public function __construct(
         string $signInDriver,
@@ -149,11 +150,19 @@ final class CheckboxUa
         return $this->getGroup(Shifts::class);
     }
 
+    /**
+     * @return Organization
+     * @throws ReflectionException
+     */
     public function getOrganization(): Organization
     {
         return $this->getGroup(Organization::class);
     }
 
+    /**
+     * @return Receipts
+     * @throws ReflectionException
+     */
     public function getReceipts(): Receipts
     {
         return $this->getGroup(Receipts::class);
