@@ -50,6 +50,7 @@ final class CheckboxUa
     /**
      * @param string|null $accessToken
      * @return void
+     * @throws ReflectionException
      */
     private function signIn(string $accessToken = null): void
     {
@@ -86,6 +87,9 @@ final class CheckboxUa
     {
         $reflectionClass = new ReflectionClass($class);
         $propertyName = lcfirst($reflectionClass->getShortName());
+        if (! class_exists($class)) {
+            throw new RuntimeException('Class does not exists '.$class);
+        }
         if (! property_exists(self::class, $propertyName)) {
             throw new RuntimeException('Property does not exists '.$propertyName);
         }
