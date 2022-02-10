@@ -20,6 +20,7 @@ class SingInRequestEntityExceptionTest extends TestCase
     {
         $this->expectException(PropertyValidationException::class);
         $entity = SignInRequestEntity::create([]);
+        
     }
 
 }
