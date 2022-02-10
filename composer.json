@@ -44,6 +44,9 @@
   },
   "minimum-stability": "stable",
   "scripts": {
+    "post-install-cmd": "cghooks add --ignore-lock",
+    "post-update-cmd": "cghooks update",
+    "cghooks": "vendor/bin/cghooks",
     "code-analyze": [
       "vendor/bin/phpcbf --extensions=php --encoding=utf-8 -n -p --standard=PSR2 ./src/",
       "vendor/bin/phpcs --extensions=php --encoding=utf-8 -n -p --standard=PSR2 ./src/",
