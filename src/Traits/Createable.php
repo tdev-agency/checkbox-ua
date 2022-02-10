@@ -18,6 +18,14 @@ trait Createable
     /**
      * @throws PropertyValidationException
      */
+    public static function create(array $data = []): self
+    {
+        return new static($data);
+    }
+
+    /**
+     * @throws PropertyValidationException
+     */
     protected function validateRequired(): void
     {
         if (empty($this->required)) {
@@ -40,13 +48,5 @@ trait Createable
             $this->$key = $value;
         }
         return $this;
-    }
-
-    /**
-     * @throws PropertyValidationException
-     */
-    public static function create(array $data = []): self
-    {
-        return new static($data);
     }
 }
