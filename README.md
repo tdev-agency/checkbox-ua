@@ -2,6 +2,23 @@
 
 PHP SDK for [Checkbox.ua](https://checkbox.ua/)
 
+1. [Installation]()
+2. [Usage]()
+3. [Cashier]()
+   1. [Completion of the session of a cashier with the current access token]() 
+   1. [Getting information about the current user (cashier)]() 
+   1. [Receiving information about an active change of user (cashier)]() 
+   1. [Check signature]() 
+4. [Organization]()
+   1. [Get current organization receipt settings]()
+   1. [Get current organization logo]()
+   1. [Get current organization text logo]()
+5. [Shifts]()
+   1. [Creating a Z-Report and closing the current shift by the user (cashier)]()
+   1. [Opening a new shift by a cashier]()
+   1. [Getting current cashier shifts]()
+   1. [Receiving information about the current shift]()
+
 ## Installation
 
 The recommended way to install Guzzle is through [Composer](https://getcomposer.org/).
@@ -51,7 +68,7 @@ There are two ways to call required tag.
 E.g.: ```$cashier = $client->getCashier();``` or by using helper method
 ``$cashier = $client->make(\TDevAgency\CheckboxUa\Tags\Cashier::class);``
 
-## Cashier
+## Cashier ##
 
 ### Completion of the session of a cashier with the current access token
 
@@ -91,7 +108,7 @@ $client->make(\TDevAgency\CheckboxUa\Tags\Organization::class)->receiptConfig()
 $client->make(\TDevAgency\CheckboxUa\Tags\Organization::class)->logoPng()
 ```
 
-### Get current organization logo
+### Get current organization text logo
 
 ```php
 $client->make(\TDevAgency\CheckboxUa\Tags\Organization::class)->textLogoPng()
