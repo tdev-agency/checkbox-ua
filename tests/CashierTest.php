@@ -3,6 +3,7 @@
 namespace TDevAgency\CheckboxUa\Tests;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
@@ -16,7 +17,7 @@ class CashierTest extends TestCase
 {
     /**
      * @return CheckboxUa
-     * @throws PropertyValidationException
+     * @throws PropertyValidationException|ReflectionException
      */
     public function testSingInWithLoginPassword(): CheckboxUa
     {
@@ -34,6 +35,7 @@ class CashierTest extends TestCase
     /**
      * @return CheckboxUa
      * @throws PropertyValidationException
+     * @throws ReflectionException
      */
     public function testSingInWithPinCode(): CheckboxUa
     {
@@ -108,5 +110,4 @@ class CashierTest extends TestCase
     {
         $this->assertIsBool($client->getCashier()->signOut());
     }
-
 }

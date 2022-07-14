@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Requests\ReceiptQueryRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
-use TDevAgency\CheckboxUa\Groups\Receipts;
+use TDevAgency\CheckboxUa\Tags\Receipts;
 
 class ReceiptIndexTest extends TestCase
 {

@@ -13,7 +13,6 @@ class SignInResponseEntity implements Arrayable
     private string $token_type;
     private string $access_token;
 
-
     /**
      * @return string
      */

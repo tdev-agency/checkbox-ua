@@ -5,14 +5,22 @@ namespace TDevAgency\CheckboxUa\Traits;
 use DateTimeInterface;
 use ReflectionClass;
 use ReflectionProperty;
+use TDevAgency\CheckboxUa\Exceptions\PropertyValidationException;
 use TDevAgency\CheckboxUa\Interfaces\ShiftStatusInterface;
 use Illuminate\Contracts\Support\Arrayable as ArrayableInterface;
 
 trait Arrayable
 {
-    /** @return array */
+    use HasRequiredProperties;
+
+    /**
+     * @return array
+     * @throws PropertyValidationException
+     */
     public function toArray(): array
     {
+        $this->validateRequired();
+
         $reflect = new ReflectionClass(self::class);
         $props = $reflect->getProperties(ReflectionProperty::IS_PRIVATE);
         $data = [];

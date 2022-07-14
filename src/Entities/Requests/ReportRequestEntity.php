@@ -13,7 +13,6 @@ class ReportRequestEntity implements CreateEntityInterface
     use Arrayable;
     use Createable;
 
-
     private ?string $id = null;
     private ?int $serial = null;
     private Collection $payments;
@@ -37,7 +36,7 @@ class ReportRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getId(): ?string
     {
@@ -45,7 +44,7 @@ class ReportRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getSerial(): ?int
     {
@@ -85,7 +84,7 @@ class ReportRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getLastReceiptId(): ?string
     {
@@ -141,7 +140,7 @@ class ReportRequestEntity implements CreateEntityInterface
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return DateTimeInterface
      */
     public function getCreatedAt(): ?DateTimeInterface
     {

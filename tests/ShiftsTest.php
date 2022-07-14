@@ -11,7 +11,7 @@ use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;
 use TDevAgency\CheckboxUa\Exceptions\NoOpenShiftException;
 use TDevAgency\CheckboxUa\Exceptions\OpenedShiftException;
-use TDevAgency\CheckboxUa\Groups\Shifts;
+use TDevAgency\CheckboxUa\Tags\Shifts;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 use Throwable;
 

@@ -7,7 +7,7 @@ use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Responses\OrganizationReceiptSettingsResponseEntity;
 use TDevAgency\CheckboxUa\Exceptions\NotFoundException;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
-use TDevAgency\CheckboxUa\Groups\Organization;
+use TDevAgency\CheckboxUa\Tags\Organization;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 use Throwable;
 

@@ -5,18 +5,18 @@ namespace TDevAgency\CheckboxUa\HttpClient;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Response;
 use RuntimeException;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Exceptions\ForbiddenException;
 use TDevAgency\CheckboxUa\Exceptions\NotFoundException;
 use TDevAgency\CheckboxUa\Exceptions\UnauthorizedException;
 use TDevAgency\CheckboxUa\Exceptions\UnprocessableEntityException;
-use TDevAgency\CheckboxUa\Groups\Cashier;
+use TDevAgency\CheckboxUa\Tags\Cashier;
 use Throwable;
 
 final class HttpClient
 {
-
     private const LIVE_API = 'https://api.checkbox.ua/api/v1/';
 
     private const DEV_API = 'https://dev-api.checkbox.in.ua/api/v1/';
@@ -31,7 +31,7 @@ final class HttpClient
     {
         $this->http = new GuzzleHttpClient(
             [
-            'base_uri' => ! $isDevMode ? self::LIVE_API : self::DEV_API,
+                'base_uri' => !$isDevMode ? self::LIVE_API : self::DEV_API,
             ]
         );
     }
@@ -45,10 +45,10 @@ final class HttpClient
     }
 
     /**
-     * @param  string $uri
-     * @param  string $method
-     * @param  array  $options
-     * @param  bool   $catRetry
+     * @param string $uri
+     * @param string $method
+     * @param array $options
+     * @param bool $catRetry
      * @return array|null
      * @throws ForbiddenException
      * @throws GuzzleException
@@ -65,7 +65,9 @@ final class HttpClient
     ): ?array {
         $options['headers'] = $this->options['headers'];
         try {
-            $contents = $this->http->request($method, $uri, $options)->getBody()->getContents();
+            /** @var Response $request */
+            $request = $this->http->request($method, $uri, $options);
+            $contents = $request->getBody()->getContents();
         } catch (ClientException $clientException) {
             if ($clientException->getCode() === 401) {
                 if ($catRetry && $this->signInDriver !== null && $this->signInRequestEntity !== null) {
@@ -126,7 +128,7 @@ final class HttpClient
     }
 
     /**
-     * @param  string $contents
+     * @param string $contents
      * @return array
      */
     private function getJson(string $contents): ?array
@@ -134,7 +136,7 @@ final class HttpClient
         $decodedContents = json_decode($contents, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(
-                'Error trying to decode response: '.
+                'Error trying to decode response: ' .
                 json_last_error_msg()
             );
         }
@@ -143,8 +145,8 @@ final class HttpClient
     }
 
     /**
-     * @param  string $uri
-     * @param  array  $options
+     * @param string $uri
+     * @param array $options
      * @return array
      * @throws Throwable
      */
@@ -154,17 +156,17 @@ final class HttpClient
     }
 
     /**
-     * @param  string|null $accessToken
+     * @param string|null $accessToken
      * @return $this
      */
     public function setAccessToken(?string $accessToken = null): HttpClient
     {
-        $this->options['headers']['Authorization'] = 'Bearer '.$accessToken;
+        $this->options['headers']['Authorization'] = 'Bearer ' . $accessToken;
         return $this;
     }
 
     /**
-     * @param  string $licenseKey
+     * @param string $licenseKey
      * @return $this
      */
     public function setLicenseKey(string $licenseKey): HttpClient
@@ -174,9 +176,9 @@ final class HttpClient
     }
 
     /**
-     * @param  Cashier             $cashier
-     * @param  SignInRequestEntity $signInRequestEntity
-     * @param  string              $signInDriver
+     * @param Cashier $cashier
+     * @param SignInRequestEntity $signInRequestEntity
+     * @param string $signInDriver
      * @return $this
      */
     public function setCashier(

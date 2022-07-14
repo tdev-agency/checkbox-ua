@@ -1,8 +1,7 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Groups;
+namespace TDevAgency\CheckboxUa\Tags;
 
-use Exception;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\ShiftResponseEntity;

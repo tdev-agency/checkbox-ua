@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Entities\Responses\MeResponseEntity;
-use TDevAgency\CheckboxUa\Groups\Cashier;
+use TDevAgency\CheckboxUa\Tags\Cashier;
 use Throwable;
 
 class ExpiredAccessTokenTest extends TestCase
@@ -21,7 +21,7 @@ class ExpiredAccessTokenTest extends TestCase
     {
         $entity = SignInRequestEntity::create([
             'login' => $_ENV['LOGIN'],
-            'password' => $_ENV['PASSWORD'],
+            'pin_code' => $_ENV['PASSWORD'],
             'license_key' => $_ENV['LICENSE_KEY']
         ]);
         /**

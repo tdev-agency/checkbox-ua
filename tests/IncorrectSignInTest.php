@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Exceptions\ForbiddenException;
-use TDevAgency\CheckboxUa\Groups\Cashier;
+use TDevAgency\CheckboxUa\Tags\Cashier;
 
 class IncorrectSignInTest extends TestCase
 {

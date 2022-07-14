@@ -22,4 +22,9 @@ class ShiftStatusEntity implements ShiftStatusInterface
     {
         return $this->status === self::CREATED;
     }
+
+    public function isOpened(): bool
+    {
+        return $this->status === self::OPENED;
+    }
 }

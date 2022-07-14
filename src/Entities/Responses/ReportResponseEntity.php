@@ -42,7 +42,6 @@ class ReportResponseEntity implements Arrayable
 
     private ?DateTimeInterface $updated_at = null;
 
-
     public function __construct(array $data = [])
     {
         foreach ($data as $key => $value) {

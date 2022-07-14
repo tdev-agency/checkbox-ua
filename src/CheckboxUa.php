@@ -6,16 +6,15 @@ use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
-use TDevAgency\CheckboxUa\Groups\Cashier;
-use TDevAgency\CheckboxUa\Groups\Organization;
-use TDevAgency\CheckboxUa\Groups\Receipts;
-use TDevAgency\CheckboxUa\Groups\Shifts;
+use TDevAgency\CheckboxUa\Tags\Cashier;
+use TDevAgency\CheckboxUa\Tags\Organization;
+use TDevAgency\CheckboxUa\Tags\Receipts;
+use TDevAgency\CheckboxUa\Tags\Shifts;
 use TDevAgency\CheckboxUa\HttpClient\HttpClient;
 use TDevAgency\CheckboxUa\Interfaces\GroupInterface;
 
 final class CheckboxUa
 {
-
     public const DRIVER_SIGNIN = 'signIn';
     public const DRIVER_SIGNIN_PIN_CODE = 'signInPinCode';
     public const DRIVER_SIGNIN_SIGNATURE = 'signInSignature';

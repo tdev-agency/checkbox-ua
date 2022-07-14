@@ -1,6 +1,6 @@
 <?php
 
-namespace TDevAgency\CheckboxUa\Groups;
+namespace TDevAgency\CheckboxUa\Tags;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Contracts\Support\Arrayable;
