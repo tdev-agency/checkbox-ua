@@ -21,7 +21,7 @@ class ExpiredAccessTokenTest extends TestCase
     {
         $entity = SignInRequestEntity::create([
             'login' => $_ENV['LOGIN'],
-            'pin_code' => $_ENV['PASSWORD'],
+            'password' => $_ENV['PASSWORD'],
             'license_key' => $_ENV['LICENSE_KEY']
         ]);
         /**

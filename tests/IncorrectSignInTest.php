@@ -4,16 +4,19 @@ namespace TDevAgency\CheckboxUa\Tests;
 
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use TDevAgency\CheckboxUa\CheckboxUa;
 use TDevAgency\CheckboxUa\Entities\Requests\SignInRequestEntity;
 use TDevAgency\CheckboxUa\Exceptions\ForbiddenException;
-use TDevAgency\CheckboxUa\Tags\Cashier;
+use TDevAgency\CheckboxUa\Exceptions\PropertyValidationException;
 
 class IncorrectSignInTest extends TestCase
 {
 
     /**
      * @return void
+     * @throws ReflectionException
+     * @throws PropertyValidationException
      */
     public function testIncorrectSignIn(): void
     {
@@ -25,5 +28,4 @@ class IncorrectSignInTest extends TestCase
         ]);
         new CheckboxUa(CheckboxUa::DRIVER_SIGNIN, $entity);
     }
-
 }

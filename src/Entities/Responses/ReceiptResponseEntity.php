@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use TDevAgency\CheckboxUa\Entities\ReceiptStatusEntity;
 use TDevAgency\CheckboxUa\Entities\ReceiptTypeEntity;
+use TDevAgency\CheckboxUa\Traits\HasGoods;
 use TDevAgency\CheckboxUa\Traits\HasPayments;
 use TDevAgency\CheckboxUa\Traits\HasTaxes;
 use TDevAgency\CheckboxUa\Traits\ResponseEntity;
@@ -17,16 +18,17 @@ class ReceiptResponseEntity implements Arrayable
     use ResponseEntity;
     use HasPayments;
     use HasTaxes;
+    use HasGoods;
 
     private string $id;
     private ReceiptTypeEntity $type;
     private ?TransactionResponseEntity $transaction = null;
     private int $serial;
     private ReceiptStatusEntity $status;
-    private ReceiptGoodResponseEntity $goods;
+    private Collection $goods;
     private Collection $payments;
     private Collection $taxes;
-    private Collection $discounts;
+    private ?Collection $discounts = null;
     private int $total_sum;
     private int $total_payment;
     private int $total_rest;
@@ -53,7 +55,11 @@ class ReceiptResponseEntity implements Arrayable
     {
         foreach ($data as $key => $value) {
             if ($value !== null && property_exists(self::class, $key)) {
-                if ($key === 'payments') {
+                if ($key === 'goods') {
+                    $this->setGoods($value);
+                } elseif ($key === 'discounts') {
+                    $this->$key = Collection::make($value);
+                } elseif ($key === 'payments') {
                     $this->setPayments($value);
                 } elseif ($key === 'taxes') {
                     $this->setTaxes($value);
@@ -63,6 +69,8 @@ class ReceiptResponseEntity implements Arrayable
                     $this->$key = new ReceiptTypeEntity($value);
                 } elseif ($key === 'status') {
                     $this->$key = new ReceiptStatusEntity($value);
+                } elseif ($key === 'shift') {
+                    $this->$key = new ShiftResponseEntity($value);
                 } elseif ($key === 'status') {
                     $this->$key = new ReceiptStatusEntity($value);
                 } elseif (in_array($key, ['created_at', 'updated_at', 'fiscal_date', 'delivered_at', 'sent_dps_at'])) {

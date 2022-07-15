@@ -164,6 +164,7 @@ $client->make(\TDevAgency\CheckboxUa\Tags\Shifts::class)->getShifts($statuses, $
 | `desc`     | `false` | `boolean`  | Reverse sort order                                                                                   |
 
 ### Receiving information about the current shift
+
 ```php 
 $client->make(\TDevAgency\CheckboxUa\Tags\Shifts::class)->getShift($id, $options)
 ```
@@ -171,3 +172,29 @@ $client->make(\TDevAgency\CheckboxUa\Tags\Shifts::class)->getShift($id, $options
 | Param      | Default | type       | Description        |
 |------------|---------|------------|--------------------|
 | `id`       |         | `int`      | Required. Shift ID |
+
+## Receipts
+
+### Obtaining a list of checks within the current shift or according to filter parameters
+
+```php
+$entity = \TDevAgency\CheckboxUa\Entities\Requests\ReceiptQueryRequestEntity::create($data)
+$client->getReceipts()->index($requestEntity)
+```
+
+``$data`` params for `ReceiptQueryRequestEntity`:
+
+| Param                    | Default     | type                                           | Description        |
+|--------------------------|-------------|------------------------------------------------|--------------------|
+| `fiscal_code`            | `null`      | `string`                                       | Fiscal number      |
+| `serial`                 | `null`      | `string`                                       | Serial             |
+| `desc`                   | `false`     | `boolean`                                      | Reverse sort order |
+| `limit`                  | `25`        | `int`                                          | Limit              |
+| `offset`                 | `0`         | `int`                                          | Offset             |
+
+
+## TODO
+
+1. [Create Receipt](https://api.checkbox.in.ua/api/redoc#operation/create_receipt_api_v1_receipts_sell_post)
+2. [Get Receipt Html](https://api.checkbox.in.ua/api/redoc#operation/get_receipt_html_api_v1_receipts__receipt_id__html_get)
+3. [Webhooks](https://api.checkbox.in.ua/api/redoc#tag/Vebhuk)
