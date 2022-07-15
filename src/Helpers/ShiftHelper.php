@@ -26,7 +26,6 @@ class ShiftHelper
             ->filter(function (ShiftResponseEntity $shiftResponseEntity) {
                 return $shiftResponseEntity->getStatus()->isOpened();
             });
-        xdebug_break();
 
         if ($openedShifts->isEmpty()) {
             return $this->shiftsGroup->createShift();
